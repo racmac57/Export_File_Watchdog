@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.code-workspace
+
+# Logs
+logs/*.log
+logs/*.log.*
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Project Specific
+# Keep log directory but ignore log files
+logs/
+!logs/.gitkeep
+
+# Keep archive but ignore large files if needed
+archive/*.pyc
+archive/__pycache__/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Image files (if large, uncomment to ignore)
+# *.png
+# *.jpg
+# *.jpeg
+
+# OneDrive sync files
+~$*
+
+# Windows Task Scheduler exports (may contain user-specific paths)
+# Uncomment if you want to ignore XML files
+# *.xml
+
