@@ -142,6 +142,10 @@ Export_File_Watchdog/
 ├── logs/                        # Log files (auto-created)
 │   └── watchdog_service.log
 │
+├── Data_Validation/             # Data validation scripts (empty)
+│
+├── Other_ETL_Scripts/           # Other ETL-related scripts (empty)
+│
 └── archive/                     # Archived files
     └── comprehensive_export_watchdog.py
 ```

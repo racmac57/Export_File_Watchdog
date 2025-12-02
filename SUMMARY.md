@@ -110,6 +110,7 @@ An automated background service that:
 ## Repository Information
 
 - **Name**: Export File Watchdog Service
+- **Directory**: Export_File_Watchdog (renamed from Watchdog)
 - **Version**: 2.0.0
 - **License**: MIT
 - **Maintainer**: City of Hackensack IT Department
