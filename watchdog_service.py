@@ -237,7 +237,7 @@ class ExportWatchdogHandler(FileSystemEventHandler):
             },
             'OTActivity': {
                 'src': self.down_onedrive,
-                'dest': self.base_exports / '_POSS_EXPORT' / 'OVERTIME_EXPORT',
+                'dest': self.base_exports / '_Overtime',
                 'suffix': 'OTActivity',
                 'type': 'OvertimeActivity',
                 'format': 'xlsx',
@@ -245,7 +245,7 @@ class ExportWatchdogHandler(FileSystemEventHandler):
             },
             'TimeOffActivity': {
                 'src': self.down_onedrive,
-                'dest': self.base_exports / '_POSS_EXPORT' / 'TIME_OFF_EXPORT',
+                'dest': self.base_exports / '_Time_Off',
                 'suffix': 'TimeOffActivity',
                 'type': 'TimeOffActivity',
                 'format': 'xlsx',
@@ -267,10 +267,47 @@ class ExportWatchdogHandler(FileSystemEventHandler):
                 'format': 'xlsx',
                 'year_based': False
             },
+            'vehicle-pursuit-reports': {
+                'src': self.down_local,
+                'dest': self.base_exports / 'Benchmark' / 'vehicle_pursuit',
+                'suffix': 'vehicle-pursuit-reports',
+                'type': 'VehiclePursuit',
+                'format': 'csv',
+                'year_based': False,
+                'overwrite': True,  # Overwrite existing file
+                'remove_trailing_numbers': True  # Remove (1), (02), etc.
+            },
+            'use-of-force-reports': {
+                'src': self.down_local,
+                'dest': self.base_exports / 'Benchmark' / 'use_force',
+                'suffix': 'use-of-force-reports',
+                'type': 'UseOfForce',
+                'format': 'csv',
+                'year_based': False,
+                'overwrite': True,
+                'remove_trailing_numbers': True
+            },
+            'show-of-force-reports': {
+                'src': self.down_local,
+                'dest': self.base_exports / 'Benchmark' / 'show_force',
+                'suffix': 'show-of-force-reports',
+                'type': 'ShowOfForce',
+                'format': 'csv',
+                'year_based': False,
+                'overwrite': True,
+                'remove_trailing_numbers': True
+            },
         }
 
         # New rules with year-based organization
         self.new_rules: Dict[str, Dict] = {
+            'LawSoft_Arrest': {
+                'keywords': ['LAWSOFT_ARREST', 'LawSoft_Arrest', 'lawsoft_arrest'],
+                'target_dir': '_Arrest',
+                'year_strategy': 'start',
+                'format': 'xlsx',
+                'year_based': True
+            },
             'Monthly_CAD': {
                 'keywords': ['Monthly_CAD'],
                 'target_dir': '_CAD/monthly_export',
@@ -300,18 +337,26 @@ class ExportWatchdogHandler(FileSystemEventHandler):
                 'year_based': True
             },
             'ResponseTime_CAD': {
-                'keywords': ['ResponseTime_CAD'],
+                'keywords': ['ResponseTime_CAD', 'Response_Time_CAD'],
                 'target_dir': '_CAD/response_time',
                 'year_strategy': 'end_range',
                 'format': 'xlsx',
                 'year_based': True
             },
             'ResponseTime_RMS': {
-                'keywords': ['ResponseTime_RMS'],
+                'keywords': ['ResponseTime_RMS', 'Response_Time_RMS'],
                 'target_dir': '_RMS/response_time',
                 'year_strategy': 'end_range',
                 'format': 'xlsx',
                 'year_based': True
+            },
+            'Response_Time_Generic': {
+                'keywords': ['Response_Time', 'ResponseTime'],
+                'target_dir': '_CAD/response_time',  # Default to CAD if not specified
+                'year_strategy': 'end_range',
+                'format': 'xlsx',
+                'year_based': True,
+                'detect_type': True  # Flag to detect CAD/RMS from filename
             },
         }
 
@@ -333,11 +378,24 @@ class ExportWatchdogHandler(FileSystemEventHandler):
 
         # Process legacy rules
         for key, cfg in self.legacy_rules.items():
-            pattern = f"*{key}*.{cfg['format']}"
-            for fp in cfg['src'].glob(pattern):
-                if fp.is_file():
-                    self.logger.info(f"Startup scan: found '{fp.name}' matching '{key}'")
-                    self._move_legacy_file(fp, cfg)
+            # Check all monitored folders, not just src (for files that might be in local Downloads)
+            patterns = [f"*{key}*.{cfg['format']}"]
+            # Also support .xls if format is .xlsx
+            if cfg['format'] == 'xlsx':
+                patterns.append(f"*{key}*.xls")
+            # Special case: e_ticket also supports CSV files
+            if key == 'e_ticket':
+                patterns.append(f"*{key}*.csv")
+            
+            # For Benchmark reports, check the specific source folder
+            monitor_paths = self.monitor_paths if not cfg.get('src') else [cfg['src']]
+            
+            for monitor_path in monitor_paths:
+                for pattern in patterns:
+                    for fp in monitor_path.glob(pattern):
+                        if fp.is_file():
+                            self.logger.info(f"Startup scan: found '{fp.name}' matching '{key}'")
+                            self._move_legacy_file(fp, cfg)
 
         # Process new rules
         for key, cfg in self.new_rules.items():
@@ -389,7 +447,18 @@ class ExportWatchdogHandler(FileSystemEventHandler):
 
         # Check legacy rules first
         for key, cfg in self.legacy_rules.items():
-            if key.lower() in name_lower and name_lower.endswith(f".{cfg['format']}"):
+            # Support both .xls and .xlsx for legacy files
+            expected_format = cfg['format']
+            if expected_format == 'xlsx':
+                format_match = name_lower.endswith('.xlsx') or name_lower.endswith('.xls')
+            else:
+                format_match = name_lower.endswith(f".{expected_format}")
+            
+            # Special case: e_ticket also supports CSV files
+            if key == 'e_ticket':
+                format_match = format_match or name_lower.endswith('.csv')
+            
+            if key.lower() in name_lower and format_match:
                 self.recently_handled[fp] = now
                 time.sleep(1)  # Let any write finish
                 self.logger.info(f"Detected '{key}' in '{fp.name}', moving now.")
@@ -419,8 +488,17 @@ class ExportWatchdogHandler(FileSystemEventHandler):
                 self.logger.warning(f"File not found (already moved?): {file_path.name}")
                 return
 
+            # Handle overwrite mode (for Benchmark reports)
+            if cfg.get('overwrite', False):
+                self._move_with_overwrite(file_path, cfg)
+                return
+
             ts = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
-            new_name = f"{ts}_{cfg['suffix']}.{cfg['format']}"
+            # Preserve original file extension for e_ticket CSV files
+            if cfg.get('type') == 'E_Ticket' and file_path.suffix.lower() == '.csv':
+                new_name = f"{ts}_{cfg['suffix']}.csv"
+            else:
+                new_name = f"{ts}_{cfg['suffix']}.{cfg['format']}"
             dest_path = cfg['dest'] / new_name
 
             self.logger.info(f"Moving '{file_path.name}' -> '{dest_path.name}'")
@@ -428,6 +506,53 @@ class ExportWatchdogHandler(FileSystemEventHandler):
 
             if success:
                 self.logger.info(f"SUCCESS: {cfg['type']} moved: '{file_path.name}' -> '{new_name}'")
+            else:
+                self.logger.error(f"FAILED: Could not move {cfg['type']} file '{file_path.name}'")
+
+        except Exception as e:
+            self.logger.error(f"Error moving {cfg['type']} file '{file_path.name}': {e}")
+
+    def _move_with_overwrite(self, file_path: Path, cfg: Dict) -> None:
+        """
+        Move a file with overwrite behavior, removing trailing numbers from filename.
+
+        Args:
+            file_path: Path to the file to move
+            cfg: Configuration dictionary for this rule
+        """
+        try:
+            if not file_path.exists():
+                self.logger.warning(f"File not found (already moved?): {file_path.name}")
+                return
+
+            # Remove trailing numbers like (1), (02), (003), etc. from filename
+            original_name = file_path.stem  # filename without extension
+            if cfg.get('remove_trailing_numbers', False):
+                # Pattern: matches ( followed by optional digits, then )
+                cleaned_name = re.sub(r'\(\d+\)$', '', original_name)
+            else:
+                cleaned_name = original_name
+
+            # Construct destination filename
+            dest_filename = f"{cleaned_name}.{cfg['format']}"
+            dest_path = cfg['dest'] / dest_filename
+
+            # Ensure destination directory exists
+            cfg['dest'].mkdir(parents=True, exist_ok=True)
+
+            # Delete existing file if it exists (overwrite)
+            if dest_path.exists():
+                self.logger.info(f"Overwriting existing file: {dest_path.name}")
+                try:
+                    dest_path.unlink()
+                except Exception as e:
+                    self.logger.warning(f"Could not delete existing file {dest_path.name}: {e}")
+
+            self.logger.info(f"Moving '{file_path.name}' -> '{dest_path.name}' (overwrite mode)")
+            success = self.file_mover.move_file(file_path, dest_path, self.logger)
+
+            if success:
+                self.logger.info(f"SUCCESS: {cfg['type']} moved: '{file_path.name}' -> '{dest_path.name}'")
             else:
                 self.logger.error(f"FAILED: Could not move {cfg['type']} file '{file_path.name}'")
 
@@ -450,14 +575,25 @@ class ExportWatchdogHandler(FileSystemEventHandler):
             # Extract year from filename
             year = self.year_extractor.extract_year(file_path.name, cfg['year_strategy'])
 
+            # Handle generic Response_Time files - detect CAD/RMS from filename
+            target_dir = cfg['target_dir']
+            if cfg.get('detect_type', False):
+                name_lower = file_path.name.lower()
+                if 'cad' in name_lower:
+                    target_dir = '_CAD/response_time'
+                elif 'rms' in name_lower:
+                    target_dir = '_RMS/response_time'
+                # If neither CAD nor RMS found, use default (CAD)
+                self.logger.info(f"Detected type from filename: {target_dir}")
+
             if not year:
                 self.logger.warning(
                     f"Could not extract year from '{file_path.name}' using strategy '{cfg['year_strategy']}'. "
                     f"Moving to base directory without year subfolder."
                 )
-                dest_dir = self.base_exports / cfg['target_dir']
+                dest_dir = self.base_exports / target_dir
             else:
-                dest_dir = self.base_exports / cfg['target_dir'] / year
+                dest_dir = self.base_exports / target_dir / year
 
             # Keep original filename
             dest_path = dest_dir / file_path.name
@@ -467,7 +603,7 @@ class ExportWatchdogHandler(FileSystemEventHandler):
 
             if success:
                 self.logger.info(
-                    f"SUCCESS: {cfg['target_dir']} file moved: '{file_path.name}' -> '{dest_path}'"
+                    f"SUCCESS: {target_dir} file moved: '{file_path.name}' -> '{dest_path}'"
                 )
             else:
                 self.logger.error(f"FAILED: Could not move file '{file_path.name}'")

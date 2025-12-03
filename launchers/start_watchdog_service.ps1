@@ -1,9 +1,13 @@
 # PowerShell script to start the Watchdog Service with duplicate check
 # Can be used as a Directory Opus button command
 
-Add-Type -AssemblyName System.Windows.Forms
+# Suppress errors initially
+$ErrorActionPreference = "SilentlyContinue"
+$ProgressPreference = "SilentlyContinue"
 
-$scriptDir = "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog"
+Add-Type -AssemblyName System.Windows.Forms -ErrorAction SilentlyContinue
+
+$scriptDir = "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog"
 $scriptPath = Join-Path $scriptDir "watchdog_service.py"
 $pythonExe = "pythonw.exe"
 
@@ -11,10 +15,10 @@ $pythonExe = "pythonw.exe"
 # Method: Check if any pythonw process has the script file open
 $isRunning = $false
 try {
-    $processes = Get-Process pythonw -ErrorAction SilentlyContinue
+    $processes = Get-Process pythonw -ErrorAction SilentlyContinue 2>$null
     foreach ($proc in $processes) {
         try {
-            $cmdLine = (Get-CimInstance Win32_Process -Filter "ProcessId = $($proc.Id)").CommandLine
+            $cmdLine = (Get-CimInstance Win32_Process -Filter "ProcessId = $($proc.Id)" -ErrorAction SilentlyContinue).CommandLine
             if ($cmdLine -and $cmdLine -like "*watchdog_service.py*") {
                 $isRunning = $true
                 break
@@ -24,9 +28,9 @@ try {
             # If we can't check command line, try alternative method
             # Check if log file is being written to recently
             $logFile = Join-Path $scriptDir "logs\watchdog_service.log"
-            if (Test-Path $logFile) {
-                $logAge = (Get-Item $logFile).LastWriteTime
-                if ((Get-Date) - $logAge -lt (New-TimeSpan -Minutes 2)) {
+            if (Test-Path $logFile -ErrorAction SilentlyContinue) {
+                $logAge = (Get-Item $logFile -ErrorAction SilentlyContinue).LastWriteTime
+                if ($logAge -and (Get-Date) - $logAge -lt (New-TimeSpan -Minutes 2)) {
                     $isRunning = $true
                     break
                 }
@@ -50,19 +54,35 @@ if ($isRunning) {
 }
 
 # Change to script directory
-Set-Location $scriptDir
+try {
+    Set-Location $scriptDir -ErrorAction SilentlyContinue
+}
+catch {
+    # Continue even if directory change fails
+}
 
 # Start the service hidden
-Start-Process -FilePath $pythonExe -ArgumentList "`"$scriptPath`"" -WindowStyle Hidden
-
-# Wait a moment for process to start
-Start-Sleep -Milliseconds 500
-
-# Show confirmation
-[System.Windows.Forms.MessageBox]::Show(
-    "Watchdog Service started successfully!`n`nMonitoring:`n- Desktop`n- Downloads (OneDrive)`n- Downloads (Local)`n`nLog: $scriptDir\logs\watchdog_service.log",
-    "Watchdog Service",
-    [System.Windows.Forms.MessageBoxButtons]::OK,
-    [System.Windows.Forms.MessageBoxIcon]::Information
-)
+try {
+    Start-Process -FilePath $pythonExe -ArgumentList "`"$scriptPath`"" -WindowStyle Hidden -ErrorAction SilentlyContinue | Out-Null
+    
+    # Wait a moment for process to start
+    Start-Sleep -Milliseconds 500
+    
+    # Show confirmation
+    [System.Windows.Forms.MessageBox]::Show(
+        "Watchdog Service started successfully!`n`nMonitoring:`n- Desktop`n- Downloads (OneDrive)`n- Downloads (Local)`n`nLog: $scriptDir\logs\watchdog_service.log",
+        "Watchdog Service",
+        [System.Windows.Forms.MessageBoxButtons]::OK,
+        [System.Windows.Forms.MessageBoxIcon]::Information
+    ) | Out-Null
+}
+catch {
+    # Show error message if startup fails
+    [System.Windows.Forms.MessageBox]::Show(
+        "Failed to start Watchdog Service.`n`nError: $($_.Exception.Message)`n`nPlease check:`n- Python is installed`n- Script path is correct`n- Log file: $scriptDir\logs\watchdog_service.log",
+        "Watchdog Service Error",
+        [System.Windows.Forms.MessageBoxButtons]::OK,
+        [System.Windows.Forms.MessageBoxIcon]::Error
+    ) | Out-Null
+}
 

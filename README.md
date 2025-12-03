@@ -94,10 +94,28 @@ All organized files are moved to:
 
 - **SCRPA_CAD_Export** → `_CAD/SCRPA/`
 - **SCRPA_RMS_Export** → `_RMS/SCRPA/`
-- **OTActivity** → `_POSS_EXPORT/OVERTIME_EXPORT/`
-- **TimeOffActivity** → `_POSS_EXPORT/TIME_OFF_EXPORT/`
+- **OTActivity** → `_Overtime/`
+- **TimeOffActivity** → `_Time_Off/`
 - **e_ticket** → `_Summons/E_Ticket/`
+  - **Pattern**: Filename must contain `e_ticket` (case-insensitive)
+  - **Formats**: `.csv`, `.xlsx`, or `.xls`
+  - **Example**: `2025_11_e_ticket_export.csv` → `_Summons/E_Ticket/`
 - **Backtracet_Arrests_Export** → `_BACKTRACE_ARRESTS/`
+- **vehicle-pursuit-reports** → `Benchmark/vehicle_pursuit/`
+  - **Pattern**: Filename must contain `vehicle-pursuit-reports` (case-insensitive)
+  - **Format**: `.csv`
+  - **Behavior**: Removes trailing numbers like `(1)`, `(02)`, etc. and overwrites existing file
+  - **Example**: `vehicle-pursuit-reports-01_01_2025-12_31_2025(1).csv` → `vehicle-pursuit-reports-01_01_2025-12_31_2025.csv`
+- **use-of-force-reports** → `Benchmark/use_force/`
+  - **Pattern**: Filename must contain `use-of-force-reports` (case-insensitive)
+  - **Format**: `.csv`
+  - **Behavior**: Removes trailing numbers and overwrites existing file
+  - **Example**: `use-of-force-reports-01_01_2025-12_31_2025(02).csv` → `use-of-force-reports-01_01_2025-12_31_2025.csv`
+- **show-of-force-reports** → `Benchmark/show_force/`
+  - **Pattern**: Filename must contain `show-of-force-reports` (case-insensitive)
+  - **Format**: `.csv`
+  - **Behavior**: Removes trailing numbers and overwrites existing file
+  - **Example**: `show-of-force-reports-01_01_2025-12_31_2025(1).csv` → `show-of-force-reports-01_01_2025-12_31_2025.csv`
 
 ### Time-Series Exports (Year-Based Organization)
 
@@ -115,6 +133,11 @@ All organized files are moved to:
 - **Pattern**: `YYYY_MM_to_YYYY_MM_ResponseTime_CAD.xlsx` (or `_RMS`)
 - **Destination**: `_CAD/response_time/YYYY/` or `_RMS/response_time/YYYY/`
 - **Example**: `2024_08_to_2025_08_ResponseTime_CAD.xlsx` → `_CAD/response_time/2025/`
+
+#### LawSoft Arrest Exports
+- **Pattern**: `YYYY_MM_LAWSOFT_ARREST.xlsx`
+- **Destination**: `_Arrest/YYYY/`
+- **Example**: `2025_11_LAWSOFT_ARREST.xlsx` → `_Arrest/2025/`
 
 ## 📂 Directory Structure
 
@@ -227,5 +250,5 @@ For issues, questions, or contributions, please open an issue on GitHub.
 
 ---
 
-**Version**: 2.0.0  
+**Version**: 2.0.2  
 **Last Updated**: December 2024

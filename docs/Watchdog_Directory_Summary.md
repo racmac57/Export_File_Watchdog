@@ -14,8 +14,8 @@ Checking the log file for context:
 Watchdog/
 ├── __pycache__/
 │   └── comprehensive_export_watchdog.cpython-313.pyc
-├── comprehensive_export_watchdog.log (38KB, 404 lines)
-├── comprehensive_export_watchdog.py (7.0KB, 193 lines)
+├── watchdog_service.log (38KB, 404 lines)
+├── watchdog_service.py (7.0KB, 193 lines)
 ├── Watchdog.code-workspace (60B, 8 lines)
 ├── HPD Export Watchdog.xml (4.1KB, 52 lines)
 ├── start_watchdog_hidden.vbs (215B, 3 lines)
@@ -27,7 +27,7 @@ Watchdog/
 
 #### 1. Main Python Script
 
-**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\comprehensive_export_watchdog.py`
+**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\watchdog_service.py`
 
 **Description:** Python watchdog script that monitors folders and automatically moves export files to organized destinations. Features:
 
@@ -45,13 +45,13 @@ Watchdog/
 
 #### 2. Log File
 
-**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\comprehensive_export_watchdog.log`
+**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\watchdog_service.log`
 
 **Description:** Activity log (38KB, 404 lines) showing file detection and move operations with timestamps.
 
 #### 3. Windows Task Scheduler Configuration
 
-**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\HPD Export Watchdog.xml`
+**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\HPD Export Watchdog.xml`
 
 **Description:** Windows Task Scheduler XML that:
 
@@ -62,19 +62,19 @@ Watchdog/
 
 #### 4. VBScript Launcher
 
-**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\start_watchdog_hidden.vbs`
+**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\start_watchdog_hidden.vbs`
 
 **Description:** VBScript that runs the Python script hidden (`pythonw`) from the Watchdog directory.
 
 #### 5. VS Code Workspace
 
-**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\Watchdog.code-workspace`
+**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\Watchdog.code-workspace`
 
 **Description:** VS Code workspace configuration pointing to the current directory.
 
 #### 6. Python Cache
 
-**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\__pycache__\comprehensive_export_watchdog.cpython-313.pyc`
+**Path:** `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\__pycache__\comprehensive_export_watchdog.cpython-313.pyc`
 
 **Description:** Compiled Python bytecode (Python 3.13).
 

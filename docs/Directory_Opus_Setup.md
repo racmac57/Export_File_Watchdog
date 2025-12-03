@@ -24,7 +24,7 @@ All launcher scripts are located in the `launchers/` subdirectory:
    - **Icon**: Choose an appropriate icon (e.g., play/start icon)
    - **Command**: 
      ```
-     powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service.ps1"
+     powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service.ps1"
      ```
    - **Working Directory**: Leave empty or set to Watchdog directory
    - **Show in**: Choose where you want it visible
@@ -37,7 +37,7 @@ All launcher scripts are located in the `launchers/` subdirectory:
    - **Icon**: Choose a stop icon
    - **Command**:
      ```
-     powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\stop_watchdog_service.ps1"
+     powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\stop_watchdog_service.ps1"
      ```
 
 ### Alternative: Simple VBScript Method
@@ -46,12 +46,12 @@ If you prefer a simpler approach without duplicate checking:
 
 **Command for Start Button:**
 ```
-wscript.exe "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service.vbs"
+wscript.exe "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service.vbs"
 ```
 
 **Or for silent version (no popups):**
 ```
-powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service_silent.ps1"
+powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service_silent.ps1"
 ```
 
 **Command for Stop Button:**
@@ -63,17 +63,17 @@ powershell.exe -Command "Get-Process pythonw | Where-Object {$_.CommandLine -lik
 
 ### Start Button Command (with confirmation):
 ```
-powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service.ps1"
+powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service.ps1"
 ```
 
 ### Start Button Command (silent, no popups):
 ```
-powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service_silent.ps1"
+powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service_silent.ps1"
 ```
 
 ### Stop Button Command:
 ```
-powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\stop_watchdog_service.ps1"
+powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\stop_watchdog_service.ps1"
 ```
 
 ## Testing

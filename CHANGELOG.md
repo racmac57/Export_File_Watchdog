@@ -5,6 +5,30 @@ All notable changes to the Export File Watchdog Service will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.2] - 2024-12-02
+
+### Added
+- Support for LawSoft arrest exports (`YYYY_MM_LAWSOFT_ARREST.xlsx`) with year-based organization
+- Support for generic Response Time exports (detects CAD/RMS from filename or defaults to CAD)
+- Support for CSV format in e-ticket exports (previously only .xlsx)
+- Support for .xls format in Overtime and TimeOff exports (in addition to .xlsx)
+- Three new Benchmark export types:
+  - `vehicle-pursuit-reports` → `Benchmark/vehicle_pursuit/`
+  - `use-of-force-reports` → `Benchmark/use_force/`
+  - `show-of-force-reports` → `Benchmark/show_force/`
+- Overwrite mode for Benchmark reports (replaces existing files instead of timestamping)
+- Automatic trailing number removal for Benchmark reports (removes `(1)`, `(02)`, etc. from filenames)
+
+### Changed
+- Updated Overtime export destination path from `_POSS_EXPORT/OVERTIME_EXPORT/` to `_Overtime/`
+- Updated TimeOff export destination path from `_POSS_EXPORT/TIME_OFF_EXPORT/` to `_Time_Off/`
+- Enhanced pattern matching to support both `ResponseTime` and `Response_Time` naming conventions
+- Improved error handling in PowerShell launcher scripts to suppress red text errors in Directory Opus
+
+### Fixed
+- Directory Opus button configuration - fixed inline VBScript code requirement for Script Function type
+- File format detection for legacy exports (now properly handles .xls, .xlsx, and .csv)
+
 ## [2.0.1] - 2024-12-XX
 
 ### Changed

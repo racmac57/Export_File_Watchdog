@@ -10,10 +10,16 @@ Complete configuration details for each Watchdog Service launcher button.
 
 **Type:** `Script Function`
 
-**Command Editor Canvas:**
+**Script Type:** `VBScript`
+
+**Command Editor Canvas (inline VBScript code):**
+```vbscript
+Set WshShell = CreateObject("WScript.Shell")
+WshShell.CurrentDirectory = "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog"
+WshShell.Run "pythonw watchdog_service.py", 0, False
 ```
-wscript.exe "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service.vbs"
-```
+
+**Note:** For "Script Function" type, you must paste the VBScript code directly (not a file path). Directory Opus executes the code inline.
 
 **Button Settings:**
 - **Label:** `Start Watchdog`
@@ -31,7 +37,7 @@ wscript.exe "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Wat
 
 **Command Editor Canvas:**
 ```
-powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service_silent.ps1"
+powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service_silent.ps1"
 ```
 
 **Button Settings:**
@@ -50,7 +56,7 @@ powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\caruc
 
 **Command Editor Canvas:**
 ```
-powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service.ps1"
+powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service.ps1"
 ```
 
 **Button Settings:**
@@ -69,7 +75,7 @@ powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\caruc
 
 **Command Editor Canvas:**
 ```
-C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service.bat
+C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service.bat
 ```
 
 **Button Settings:**
@@ -88,7 +94,7 @@ C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launche
 
 **Command Editor Canvas:**
 ```
-powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\stop_watchdog_service.ps1"
+powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\stop_watchdog_service.ps1"
 ```
 
 **Button Settings:**
@@ -103,11 +109,11 @@ powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\caruc
 
 | Button Name | Type | Command |
 |------------|------|---------|
-| **Start Watchdog (VBScript)** | Script Function | `wscript.exe "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service.vbs"` |
-| **Start Watchdog (Silent)** | Standard Function | `powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service_silent.ps1"` |
-| **Start Watchdog (Confirm)** | Standard Function | `powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service.ps1"` |
-| **Start Watchdog (Batch)** | MS-DOS Batch Function | `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service.bat` |
-| **Stop Watchdog** | Standard Function | `powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\stop_watchdog_service.ps1"` |
+| **Start Watchdog (VBScript)** | Script Function | Inline VBScript (see Button 1 above) |
+| **Start Watchdog (Silent)** | Standard Function | `powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service_silent.ps1"` |
+| **Start Watchdog (Confirm)** | Standard Function | `powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service.ps1"` |
+| **Start Watchdog (Batch)** | MS-DOS Batch Function | `C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service.bat` |
+| **Stop Watchdog** | Standard Function | `powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\stop_watchdog_service.ps1"` |
 
 ---
 
@@ -119,7 +125,7 @@ For most users, we recommend creating **two buttons**:
 - **Type:** Standard Function (Opus or external)
 - **Command:** 
   ```
-  powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\start_watchdog_service_silent.ps1"
+  powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\start_watchdog_service_silent.ps1"
   ```
 - **Why:** Silent operation, duplicate detection, no popups
 
@@ -127,7 +133,7 @@ For most users, we recommend creating **two buttons**:
 - **Type:** Standard Function (Opus or external)
 - **Command:**
   ```
-  powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Watchdog\launchers\stop_watchdog_service.ps1"
+  powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Users\carucci_r\OneDrive - City of Hackensack\02_ETL_Scripts\Export_File_Watchdog\launchers\stop_watchdog_service.ps1"
   ```
 
 ---
@@ -150,12 +156,14 @@ For most users, we recommend creating **two buttons**:
 
 ## Notes
 
-- **Script Function** type is used for VBScript files (.vbs)
-- **MS-DOS Batch Function** type is used for batch files (.bat)
+- **Script Function** type requires inline VBScript code (paste the code directly, not a file path)
+- **MS-DOS Batch Function** type is used for batch files (.bat) - paste the full path to the .bat file
 - **Standard Function (Opus or external)** type is used for PowerShell scripts (.ps1) when calling via powershell.exe
 - All launcher scripts use absolute paths, so they work regardless of current directory
 - The service runs hidden (no console window, no taskbar entry)
-- Logs are stored in: `Watchdog\logs\watchdog_service.log`
+- Logs are stored in: `Export_File_Watchdog\logs\watchdog_service.log`
+
+**Important:** When using "Script Function" type, Directory Opus executes the code directly. Do NOT use `wscript.exe` command - paste the actual VBScript code instead.
 
 ---
 
@@ -168,7 +176,7 @@ For most users, we recommend creating **two buttons**:
 - Ensure "Wait for completion" is unchecked in button options
 
 **Service doesn't start:**
-- Check the log file: `Watchdog\logs\watchdog_service.log`
+- Check the log file: `Export_File_Watchdog\logs\watchdog_service.log`
 - Verify Python is installed: `pythonw --version`
 - Check if service is already running (use Stop button first)
 

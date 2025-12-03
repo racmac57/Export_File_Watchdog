@@ -34,8 +34,9 @@ An automated background service that:
 - ✅ Silent background operation
 
 ### Export Types Supported
-- **Legacy**: SCRPA CAD/RMS, Overtime, Time Off, E-Tickets, Backtrace Arrests
+- **Legacy**: SCRPA CAD/RMS, Overtime, Time Off, E-Tickets, Backtrace Arrests, LawSoft Arrests
 - **Time-Series**: Monthly exports, Rolling 13-month, Response Time reports
+- **Benchmark Reports**: Vehicle Pursuit, Use of Force, Show of Force (with overwrite behavior)
 
 ### Technical Features
 - Object-oriented Python architecture
@@ -92,12 +93,13 @@ An automated background service that:
 
 ## Project Status
 
-✅ **Production Ready** - Version 2.0.0
+✅ **Production Ready** - Version 2.0.2
 
 - Fully functional and tested
 - Comprehensive documentation
 - Ready for GitHub deployment
 - Suitable for production use
+- Supports 15+ export types with automatic organization
 
 ## Future Roadmap
 
@@ -111,7 +113,7 @@ An automated background service that:
 
 - **Name**: Export File Watchdog Service
 - **Directory**: Export_File_Watchdog (renamed from Watchdog)
-- **Version**: 2.0.0
+- **Version**: 2.0.2
 - **License**: MIT
 - **Maintainer**: City of Hackensack IT Department
 
