@@ -5,6 +5,21 @@ All notable changes to the Export File Watchdog Service will be documented in th
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [2.0.3] - 2025-12-23
+
+### Added
+- Excel to CSV conversion functionality for desktop files
+- Automatic conversion of `.xlsx` files matching specific patterns to `.csv` format
+- Support for converting `HPD_RMS_Export.xlsx` and `Hackensack_CAD_Data.xlsx` files
+- Support for converting any file with "RMS export" in the name (case-insensitive)
+- `ExcelToCsvConverter` class for handling Excel file conversions
+- New dependencies: `pandas>=2.0.0` and `openpyxl>=3.1.0` for Excel processing
+
+### Changed
+- Updated `requirements.txt` to include pandas and openpyxl dependencies
+
 ## [2.0.2] - 2024-12-02
 
 ### Added

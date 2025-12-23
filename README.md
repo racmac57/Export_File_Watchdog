@@ -36,8 +36,13 @@ An automated file monitoring service that watches designated folders for export 
 - Windows OS (designed for Windows file system monitoring)
 - Required Python packages:
   ```bash
-  pip install watchdog
+  pip install -r requirements.txt
   ```
+  
+  Dependencies:
+  - `watchdog>=3.0.0` - File system monitoring
+  - `pandas>=2.0.0` - Excel file processing
+  - `openpyxl>=3.1.0` - Excel file engine
 
 ### Setup
 
@@ -89,6 +94,15 @@ All organized files are moved to:
 - `OneDrive - City of Hackensack\05_EXPORTS\`
 
 ## 📁 Export Types
+
+### Excel to CSV Conversion
+
+The service automatically converts specific `.xlsx` files on the desktop to `.csv` format:
+- **HPD_RMS_Export.xlsx** → `HPD_RMS_Export.csv`
+- **Hackensack_CAD_Data.xlsx** → `Hackensack_CAD_Data.csv`
+- Any file with "RMS export" in the name (case-insensitive)
+
+Files are converted in place on the desktop. The original `.xlsx` file is preserved by default.
 
 ### Legacy Exports (Timestamp Prefix)
 
@@ -212,6 +226,8 @@ The service:
 
 ```txt
 watchdog>=3.0.0
+pandas>=2.0.0
+openpyxl>=3.1.0
 ```
 
 ### Code Structure
@@ -250,5 +266,15 @@ For issues, questions, or contributions, please open an issue on GitHub.
 
 ---
 
-**Version**: 2.0.2  
-**Last Updated**: December 2024
+## What Changed in v2.0.3
+
+- Added Excel to CSV conversion functionality for desktop files
+- Automatic conversion of specific export files (HPD_RMS_Export, Hackensack_CAD_Data, and files containing "RMS export")
+- New dependencies: pandas and openpyxl for Excel processing
+
+See [CHANGELOG.md](CHANGELOG.md) for full details.
+
+---
+
+**Version**: 2.0.3  
+**Last Updated**: December 2025
