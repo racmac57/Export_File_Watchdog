@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-01-02
+
+### Added
+- **Yearly CAD/RMS Exports**: Support for `YYYY_Yearly_CAD.xlsx` and `YYYY_Yearly_RMS.xlsx` files
+  - Destination: `_CAD/full_year/YYYY/` and `_RMS/full_year/YYYY/`
+- **Arrest Exports**: Support for monthly and yearly arrest exports
+  - Monthly: `YYYY_MM_Monthly_Arrest.xlsx` → `_Arrest/monthly_export/YYYY_MM/`
+  - Yearly: `YYYY_Yearly_Arrest.xlsx` → `_Arrest/full_year/YYYY/`
+  - Lawsoft variants: `YYYY_MM_Lawsoft_Monthly_Arrest.xlsx` and `YYYY_Lawsoft_Yearly_Arrest.xlsx`
+- **NIBRS Reports**: Support for monthly and yearly NIBRS Agency Summary Reports (PDF format)
+  - Monthly: `YYYY_MM_NIBRS_AgencySummaryReport_Monthly.pdf` → `_NIBRS/monthly_export/YYYY_MM/`
+  - Yearly: `YYYY_NIBRS_AgencySummaryReport_Yearly.pdf` → `_NIBRS/full_year/YYYY/`
+  - Monitors both OneDrive and local Downloads folders
+- **Benchmark Reports Restructured**: Complete reorganization of benchmark reports
+  - **Complete Reports**: `vehicle-pursuit-reports-*.csv`, `use-of-force-reports-*.csv`, `show-of-force-reports-*.csv`
+    - Destination: `_Benchmark/{type}/complete_report/full_year/YYYY/`
+  - **Officer Reports**: `top-officers-by-vp-*.csv`, `top-officers-by-uof-*.csv`, `top-officers-by-sof-*.csv`
+    - Destination: `_Benchmark/{type}/officer_report/full_year/YYYY/`
+  - **Summary Reports**: 23 different use-of-force summary CSV types
+    - Destination: `_Benchmark/use_force/summary/full_year/YYYY/`
+- **New Year Extraction Strategies**:
+  - `year_month`: Extracts `YYYY_MM` from start of filename
+  - `date_range_start`: Extracts year from first date in `MM_DD_YYYY-MM_DD_YYYY` pattern
+  - `date_suffix`: Extracts year from end date in date range suffix
+- **Folder Monitoring**: Added monitoring for export subdirectories to organize files saved directly there
+  - Monitors `monthly_export` and `full_year` folders for CAD, RMS, and Arrest exports
+
+### Changed
+- **Benchmark Reports**: Restructured from flat structure to organized subdirectories
+  - Old: `_Benchmark/{type}/full_year/YYYY/`
+  - New: `_Benchmark/{type}/{category}/full_year/YYYY/` (category: complete_report, officer_report, summary)
+- **Year Extraction**: Enhanced to support multiple date range patterns
+- **File Organization**: Improved directory structure for better organization
+
+### Removed
+- **Excel to CSV Conversion**: Removed automatic conversion of Excel files to CSV on desktop
+  - This feature was causing duplicate file creation issues
+  - Users should export directly to desired format
+
+### Fixed
+- Directory structure issues with benchmark reports
+- File routing to correct subdirectories based on file naming patterns
+- Year extraction from date range suffixes in benchmark report filenames
+
 ## [2.0.3] - 2025-12-23
 
 ### Added

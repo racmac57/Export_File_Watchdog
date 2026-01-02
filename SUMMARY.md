@@ -94,14 +94,15 @@ An automated background service that:
 
 ## Project Status
 
-✅ **Production Ready** - Version 2.0.3
+✅ **Production Ready** - Version 2.1.0
 
 - Fully functional and tested
 - Comprehensive documentation
 - Ready for GitHub deployment
 - Suitable for production use
-- Supports 15+ export types with automatic organization
-- Excel to CSV conversion for desktop files
+- Supports 25+ export types with automatic organization
+- Organized directory structure with year-based subfolders
+- Multiple year extraction strategies for different file naming patterns
 
 ## Future Roadmap
 
@@ -115,18 +116,28 @@ An automated background service that:
 
 - **Name**: Export File Watchdog Service
 - **Directory**: Export_File_Watchdog (renamed from Watchdog)
-- **Version**: 2.0.3
+- **Version**: 2.1.0
 - **License**: MIT
 - **Maintainer**: City of Hackensack IT Department
 
-## Recent Changes (v2.0.3)
+## Recent Changes (v2.1.0)
 
-- Added Excel to CSV conversion functionality
-- Automatic conversion of HPD_RMS_Export and Hackensack_CAD_Data files
-- Support for converting files with "RMS export" in filename
-- New dependencies: pandas and openpyxl for Excel processing
+### Major Additions
+- **Yearly Exports**: Support for yearly CAD, RMS, and Arrest exports
+- **Arrest Exports**: Monthly and yearly arrest exports with Lawsoft variant support
+- **NIBRS Reports**: PDF report monitoring for monthly and yearly NIBRS Agency Summary Reports
+- **Benchmark Reports Restructured**: Complete reorganization into complete_report, officer_report, and summary categories
+- **Enhanced Year Extraction**: New strategies for extracting years from various date range patterns
+
+### Improvements
+- Better directory organization with category-based subdirectories
+- Support for files saved directly to export folders
+- Improved file routing based on naming patterns
+
+### Removed
+- Excel to CSV conversion (removed due to duplicate file creation issues)
 
 ---
 
-*Last Updated: December 2025*
+*Last Updated: January 2026*
 

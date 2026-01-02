@@ -276,5 +276,5 @@ See [CHANGELOG.md](CHANGELOG.md) for full details.
 
 ---
 
-**Version**: 2.0.3  
-**Last Updated**: December 2025
+**Version**: 2.1.0  
+**Last Updated**: January 2026
