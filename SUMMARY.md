@@ -37,6 +37,7 @@ An automated background service that:
 - **Legacy**: SCRPA CAD/RMS, Overtime, Time Off, E-Tickets, Backtrace Arrests, LawSoft Arrests
 - **Time-Series**: Monthly exports, Rolling 13-month, Response Time reports
 - **Benchmark Reports**: Vehicle Pursuit, Use of Force, Show of Force (with overwrite behavior)
+- **Excel Conversion**: Automatic conversion of specific `.xlsx` files to `.csv` format on desktop
 
 ### Technical Features
 - Object-oriented Python architecture
@@ -93,13 +94,14 @@ An automated background service that:
 
 ## Project Status
 
-✅ **Production Ready** - Version 2.0.2
+✅ **Production Ready** - Version 2.0.3
 
 - Fully functional and tested
 - Comprehensive documentation
 - Ready for GitHub deployment
 - Suitable for production use
 - Supports 15+ export types with automatic organization
+- Excel to CSV conversion for desktop files
 
 ## Future Roadmap
 
@@ -113,11 +115,18 @@ An automated background service that:
 
 - **Name**: Export File Watchdog Service
 - **Directory**: Export_File_Watchdog (renamed from Watchdog)
-- **Version**: 2.0.2
+- **Version**: 2.0.3
 - **License**: MIT
 - **Maintainer**: City of Hackensack IT Department
 
+## Recent Changes (v2.0.3)
+
+- Added Excel to CSV conversion functionality
+- Automatic conversion of HPD_RMS_Export and Hackensack_CAD_Data files
+- Support for converting files with "RMS export" in filename
+- New dependencies: pandas and openpyxl for Excel processing
+
 ---
 
-*Last Updated: December 2024*
+*Last Updated: December 2025*
 
